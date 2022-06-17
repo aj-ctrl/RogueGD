@@ -23,9 +23,13 @@ func _process(delta):
 
 
 func _on_Area2D_body_entered(body):
-	hide() # hides player on hit
-	emit_signal("hit")
-	$Area2D/CollisionShape2D.set_deferred("disabled", true)
+	if body.is_in_group("mobs"):
+		hide() # hides player on hit
+		emit_signal("hit")
+		$Area2D/CollisionShape2D.set_deferred("disabled", true)
+	else:
+		pass
+	
 
 func start(pos):
 	position = pos

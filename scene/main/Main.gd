@@ -4,6 +4,7 @@ export(PackedScene) var mob_scene
 var score
 
 func _ready():
+	$DungeonTile
 	randomize()
 
 func game_over():
@@ -27,19 +28,8 @@ func _on_MobTimer_timeout():
 	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
 	mob_spawn_location.offset = randi()
 	
-	# set mobs direction perperndicular to path direction
-	var direction = mob_spawn_location.rotation + PI / 2
-	
 	# set mobs position to a random location
 	mob.position = mob_spawn_location.position
-	
-	# add randomness to direction
-	direction += rand_range(-PI / 4, PI / 4)
-	mob.rotation = direction
-	
-	# choose velocity for mob
-	var velocity = Vector2(rand_range(150.0, 450.0), 0.0)
-	mob.linear_velocity = velocity.rotated(direction)
 	
 	# spawn the mob
 	add_child(mob)

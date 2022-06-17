@@ -11,8 +11,7 @@ region = Rect2( 88, 0, 8, 8 )
 radius = 4.0
 height = 0.0
 
-[node name="Mob" type="RigidBody2D" groups=["mobs"]]
-gravity_scale = 0.0
+[node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
