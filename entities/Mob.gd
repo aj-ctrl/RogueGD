@@ -12,6 +12,11 @@ func _physics_process(delta):
 		return
 	var dir = (player.global_position - global_position).normalized()
 	move_and_collide(dir * speed * delta)
+	
+	if dir != Vector2.ZERO:
+		$Sprite/AnimationPlayer.play("entitiesWalk")
+	else:
+		$Sprite/AnimationPlayer.stop()
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
