@@ -1,8 +1,10 @@
 extends Node2D
 
-
 export (PackedScene) var Projectile
 
+export var fire_rate : float = 10
+onready var update_delta : float = 1 / fire_rate
+var current_time : float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +14,12 @@ func _ready():
 func _process(delta):
 	look_at(get_global_mouse_position())
 	
+	current_time += delta
+	if (current_time < update_delta):
+		return
+	
 	if Input.is_action_pressed("attack"):
+		current_time = 0
 		fire()
 
 func fire():
