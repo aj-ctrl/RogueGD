@@ -2,7 +2,7 @@ extends Node2D
 
 export (PackedScene) var Projectile
 
-export var fire_rate : float = 10
+export var fire_rate : float = 5
 onready var update_delta : float = 1 / fire_rate
 var current_time : float = 0
 
@@ -26,3 +26,4 @@ func fire():
 	var p = Projectile.instance()
 	get_parent().get_parent().add_child(p)
 	p.transform = $Position2D.global_transform
+	$AudioStreamPlayer2D.play()
