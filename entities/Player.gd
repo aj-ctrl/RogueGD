@@ -2,31 +2,38 @@ extends KinematicBody2D
 
 signal hit
 
-export (PackedScene) var Bow
+var bow = load("res://Items/Bow.tscn")
 
 export var speed = 200 # pixels/sec the player will move
-var screen_size
-var is_weapon_equip = false
-
-func _ready():
-	screen_size = get_viewport_rect().size
+var is_alive = false
 
 func _process(delta):
-	var velocity = Vector2.ZERO
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("ui_down"):
-		velocity.y += 1
-	if Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
+	#if the player is alive
+	if is_alive:
+		#allow player to move
+		player_movement()
+		#allow player to equip bow
+		if Input.is_action_just_pressed("interact"):
+			equip_weapon(bow)
+	#if the player is NOT alive
+	else:
+		#remove player sprite
+		self.hide()
+		#delete bow to stop shooting
+		if get_node("Bow"):
+			$Bow.queue_free()
+
+
+func player_movement():
+	#get l/r/u/d movement and store it in velocity
+	var mv_x = Input.get_action_strength("mv_right") - Input.get_action_strength("mv_left")
+	var mv_y = Input.get_action_strength("mv_down") - Input.get_action_strength("mv_up")
+	var velocity = Vector2(mv_x, mv_y)
 	
-	if Input.is_action_just_pressed("interact"):
-		equipWep()
-	
+	#apply movement
 	move_and_slide((velocity.normalized() * speed), Vector2.ZERO)
 	
+	#walking animation when moving
 	if velocity != Vector2.ZERO:
 		$Sprite/AnimationPlayer.play("Walk")
 	else:
@@ -46,8 +53,5 @@ func start(pos):
 	show()
 	$Area2D/CollisionShape2D.disabled = false
 
-func equipWep():
-	if is_weapon_equip == false:
-		var weapon = Bow.instance()
-		add_child(weapon)
-		is_weapon_equip = true
+func equip_weapon(weapon):
+	add_child(bow.instance())

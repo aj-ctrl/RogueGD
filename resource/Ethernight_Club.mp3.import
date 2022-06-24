@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Ethernight_Club.mp3-948e67f52574e6628df818e213e0b8b9.mp3str"
+
+[deps]
+
+source_file="res://resource/Ethernight_Club.mp3"
+dest_files=[ "res://.import/Ethernight_Club.mp3-948e67f52574e6628df818e213e0b8b9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
